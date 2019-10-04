@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <title>MiniVisual Color Coded Bar</title>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.12.0/d3.js"></script>
+      <script src="../node_modules/react/umd/react.development.js"></script>
+      <script src="../node_modules/react-dom/umd/react-dom.development.js"></script>
+  </head>
+  <body>
+    <h3>Color coded bar</h3>
+
+    <div id="root"></div>
+
+    <script>
+      //window.d3 = d3;
+      //console.log(require.install);
+      //require.install ? require.install('d3', d3) : null;
+    </script>
+
+    <script src="../dist/mini-visual-react.js" ></script>
+
+    <script>
+      const data = [4, 8, -15, 41, -3, 4, -24, -46, -44, 21, 35, 42, 12,
+        -21, -16, 23, 12, 42];
+      console.log(d3.min(data));
+
+      new MiniVisual({
+        selector: '#root',
+        data: data,
+        params: {
+          width: 300,
+          yAxis: {
+            clamp: true,
+            domain: [-40, 60],
+            range: ['#fff', '#000'],
+          },
+          //minSectionWidth: 25,
+          //maxSections: 10,
+        }
+      });
+    </script>
+  </body>
+</html>

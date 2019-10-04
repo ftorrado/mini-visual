@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset='utf-8'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <title>Page Title</title>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+</head>
+<body>
+  <h1>MiniViz demo</h1>
+
+  <p>This is a demo of the plugin</p>
+
+  <h3>Color coded bar</h3>
+
+  <div id="color-coded-bar-1"></div>
+
+  <script src="https://d3js.org/d3.v3.min.js"  charset="utf-8"></script>
+  <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+  <script>
+    window.d3 = d3;
+  </script>
+
+  <script src="app-bundle.js"></script>
+  <script>
+    new MiniVisual({
+      selector: '#color-coded-bar-1',
+      data: [4, 8, -15, 41, -3, 4, -24, -46, -44, 21, 35, 42, 12, -21, -16, 23, 12, 42],
+      params: {
+        width: 300,
+        yAxis: {
+          clamp: true,
+          domain: [-40, 60],
+          range: ['#fff', '#000'],
+        },
+        //minSectionWidth: 25,
+        //maxSections: 10,
+      }
+    });
+  </script>
+</body>
+</html>
