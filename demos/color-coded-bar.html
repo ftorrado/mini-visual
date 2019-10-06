@@ -39,6 +39,10 @@
 
     <div id="root-baseline" class="chart"></div>
 
+    <h3>Heatmap with zero as baseline (alternative color scheme)</h3>
+
+    <div id="root-baseline2" class="chart"></div>
+
     <script src="../dist/mini-visual.js" ></script>
     <script>
       const data = [4, 8, -15, 41, -3, 4, -24, -46, -44, 21, 35, 42, 12,
@@ -79,6 +83,17 @@
           yAxis: {
             baseline: 0,
             palette: 'heatmap',
+          },
+        }
+      });
+
+      new MiniVisual({
+        selector: '#root-baseline2',
+        data: data,
+        params: {
+          yAxis: {
+            baseline: 0,
+            palette: 'heatmap2',
           },
         }
       });

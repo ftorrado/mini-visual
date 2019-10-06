@@ -57,7 +57,10 @@ export default class ColorCodedBar extends Visualization
     } else {
       switch (findEnumNameOrValue(PaletteEnum, this.props.yAxis.palette)) {
         case PaletteEnum.heatmap:
-          axis = axis.range(['#22f', '#ddd', '#f31']);
+          axis = axis.range(['#138', '#ffd', '#a01']);
+          break;
+        case PaletteEnum.heatmap2:
+          axis = axis.range(['#22f', '#eee', '#d10']);
           break;
         case PaletteEnum.grayscale:
         default:
