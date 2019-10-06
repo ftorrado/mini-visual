@@ -1,6 +1,6 @@
 # MiniVisual
 
-
+The simple & tiny data visualization library. View your data in a glance, in-line or wherever you fancy.
 
 ## TODO
 

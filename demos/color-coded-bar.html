@@ -4,39 +4,82 @@
       <meta charset="UTF-8">
       <title>MiniVisual Color Coded Bar</title>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.12.0/d3.js"></script>
-      <script src="../node_modules/react/umd/react.development.js"></script>
-      <script src="../node_modules/react-dom/umd/react-dom.development.js"></script>
+      <style>
+        .chart {
+          overflow: hidden;
+          width: 250px;
+          height: 40px;
+          margin: 12px;
+          border: 1px solid #ddd;
+          border-radius: 6px;
+        }
+
+        .chart div {
+          float: left;
+          height: 40px;
+          box-sizing: border-box;
+          padding: 14px 1px;
+          font: 10px sans-serif;
+          text-align: center;
+        }
+      </style>
   </head>
   <body>
-    <h3>Color coded bar</h3>
+    <h1>Color coded bar</h3>
 
-    <div id="root"></div>
+    <h3>Simple grayscale</h3>
 
-    <script>
-      //window.d3 = d3;
-      //console.log(require.install);
-      //require.install ? require.install('d3', d3) : null;
-    </script>
+    <div id="root-simple" class="chart"></div>
 
-    <script src="../dist/mini-visual-react.js" ></script>
+    <h3>Simple grayscale - reduced to 10 data points</h3>
 
+    <div id="root-reduced" class="chart"></div>
+
+    <h3>Heatmap with zero as baseline</h3>
+
+    <div id="root-baseline" class="chart"></div>
+
+    <script src="../dist/mini-visual.js" ></script>
     <script>
       const data = [4, 8, -15, 41, -3, 4, -24, -46, -44, 21, 35, 42, 12,
         -21, -16, 23, 12, 42];
-      console.log(d3.min(data));
 
       new MiniVisual({
-        selector: '#root',
+        selector: '#root-simple',
         data: data,
         params: {
-          width: 300,
           yAxis: {
             clamp: true,
             domain: [-40, 60],
             range: ['#fff', '#000'],
           },
-          //minSectionWidth: 25,
-          //maxSections: 10,
+        }
+      });
+
+      new MiniVisual({
+        selector: '#root-reduced',
+        data: data,
+        params: {
+          yAxis: {
+            clamp: true,
+            domain: [-40, 60],
+            range: ['#fff', '#000'],
+          },
+          maxSections: 10,
+          legend: {
+            labelPoints: true
+          },
+        }
+      });
+
+      new MiniVisual({
+        selector: '#root-baseline',
+        data: data,
+        params: {
+          yAxis: {
+            baseline: 0,
+            palette: 'heatmap',
+          },
         }
       });
     </script>

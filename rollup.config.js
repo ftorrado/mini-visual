@@ -1,39 +1,37 @@
-import babel from 'rollup-plugin-babel';
+import typescript from 'rollup-plugin-typescript2';
 import {terser} from "rollup-plugin-terser";
 import * as meta from "./package.json";
 
-const copyright = `// ${meta.homepage}\nv${meta.version} License ${meta.license} ${(new Date).getFullYear()} ${meta.author.name}`;
-
-const babelOptions = Object.assign({
-  exclude: /node_modules/,
-  babelrc: false
-}, require('./.babel.config.js'));
-
-console.log(babelOptions);
+const copyright = `// ${meta.homepage}\n//v${meta.version} License ${meta.license} ${(new Date).getFullYear()} ${meta.author}`;
 
 export default [
   {
-    input: './src/MiniVisual.js',
+    input: './src/MiniVisual.ts',
     output: {
       file: './dist/mini-visual.js',
       format: 'umd',
       banner: copyright,
       name: 'MiniVisual',
+      //globals: ['d3'],
     },
+    external: ['d3'],
     plugins: [
-      babel(babelOptions)
+      typescript()
     ]
   },
   {
-    input: './src/MiniVisual.js',
+    input: './src/MiniVisual.ts',
     output: {
       file: './dist/mini-visual.min.js',
       format: 'umd',
       name: 'MiniVisual',
       indent: false
     },
+    external: [
+      'd3'
+    ],
     plugins: [
-      babel(babelOptions),
+      typescript(),
       terser({output: {preamble: copyright}})
     ]
   },
