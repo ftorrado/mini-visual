@@ -1,4 +1,6 @@
 function reduceDataset(data: any[], maxSections: number): any[] {
+  if (maxSections >= data.length) return data.slice();
+
   const dataProcessed = [];
   const dataWeight = maxSections / (data.length * 1.0);
   //console.log(dataWeight);

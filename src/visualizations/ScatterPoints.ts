@@ -7,7 +7,6 @@ export default class ScatterPoints extends Visualization
   implements Visualizable {
   constructor(props: VisualizationProps) {
     super(props);
-    this.start();
   }
 
   start(props?: VisualizationProps): void {

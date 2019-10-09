@@ -1,8 +1,10 @@
+import * as meta from './package.json';
+import { terser } from 'rollup-plugin-terser';
 import typescript from 'rollup-plugin-typescript2';
-import {terser} from "rollup-plugin-terser";
-import * as meta from "./package.json";
 
-const copyright = `// ${meta.homepage}\n//v${meta.version} License ${meta.license} ${(new Date).getFullYear()} ${meta.author}`;
+const copyright = `//${meta.homepage}\n//v${meta.version} License ${
+  meta.license
+} ${new Date().getFullYear()} ${meta.author}`;
 
 export default [
   {
@@ -15,9 +17,7 @@ export default [
       //globals: ['d3'],
     },
     external: ['d3'],
-    plugins: [
-      typescript()
-    ]
+    plugins: [typescript()],
   },
   {
     input: './src/MiniVisual.ts',
@@ -25,14 +25,9 @@ export default [
       file: './dist/mini-visual.min.js',
       format: 'umd',
       name: 'MiniVisual',
-      indent: false
+      indent: false,
     },
-    external: [
-      'd3'
-    ],
-    plugins: [
-      typescript(),
-      terser({output: {preamble: copyright}})
-    ]
+    external: ['d3'],
+    plugins: [typescript(), terser({ output: { preamble: copyright } })],
   },
 ];

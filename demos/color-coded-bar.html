@@ -39,6 +39,10 @@
 
     <div id="root-baseline" class="chart"></div>
 
+    <h3>Heatmap with zero as baseline (square root scale)</h3>
+
+    <div id="root-baselineA" class="chart"></div>
+
     <h3>Heatmap with zero as baseline (alternative color scheme)</h3>
 
     <div id="root-baseline2" class="chart"></div>
@@ -83,9 +87,22 @@
           yAxis: {
             baseline: 0,
             palette: 'heatmap',
+            scale: 'linear',
           },
         }
       });
+
+    new MiniVisual({
+      selector: '#root-baselineA',
+      data: data,
+      params: {
+        yAxis: {
+          baseline: 0,
+          palette: 'heatmap',
+          scale: 'sqrt',
+        },
+      }
+    });
 
       new MiniVisual({
         selector: '#root-baseline2',

@@ -1,3 +1,6 @@
+import findEnumNameOrValue from './findEnumNameOrValue';
+import ScaleEnum from './ScaleEnum';
+
 interface AxisSettings {
   clamp: boolean;
   exact: boolean;
@@ -5,6 +8,8 @@ interface AxisSettings {
   range?: (string | number)[];
   palette?: string;
   baseline?: number;
+  scale?: ScaleEnum;
+  interpolate?: Function;
 }
 
 export default AxisSettings;
@@ -16,11 +21,25 @@ export function createAxisSettings(
   exact = false,
   palette = 'grayscale',
   baseline?: number,
+  scale?: ScaleEnum,
+  interpolate?: Function,
 ): AxisSettings {
-  return { domain, range, clamp, exact, palette, baseline };
+  return { domain, range, clamp, exact, palette, baseline, scale, interpolate };
 }
 
-export function defaultAxisSettings(axis?: AxisSettings): AxisSettings {
-  const { domain, range, clamp, exact, palette, baseline } = axis || {};
-  return createAxisSettings(domain, range, clamp, exact, palette, baseline);
+export function defaultAxisSettings(axis?: any): AxisSettings {
+  const { domain, range, clamp, exact, palette, baseline, scale, interpolate } =
+    axis || {};
+  const enumScale =
+    typeof scale === 'string' ? findEnumNameOrValue(ScaleEnum, scale) : scale;
+  return createAxisSettings(
+    domain,
+    range,
+    clamp,
+    exact,
+    palette,
+    baseline,
+    enumScale,
+    interpolate,
+  );
 }

@@ -1,21 +1,27 @@
 export default function findEnumNameOrValue<E>(
   enumerator: E,
   name: string | number,
-  def?: E[keyof E],
+  def?: any,
 ): E[keyof E] | null {
-  if (typeof enumerator[name] !== 'undefined') return enumerator[name];
-
   const isString = typeof name === 'string';
   const clean = isString ? (name as string).trim().toLocaleUpperCase() : name;
+  const keys = Object.keys(enumerator).filter(k => isNaN(Number(k)));
 
   for (const key in enumerator) {
-    const isNumProperty = parseInt(key, 10) >= 0;
-    if (
-      (isString && !isNumProperty && key.toLocaleUpperCase() === clean) ||
-      (!isString && isNumProperty && parseInt(key, 10) === clean) ||
-      (isString && String(enumerator[key]) === clean)
-    )
-      return enumerator[key];
+    const val = enumerator[key];
+    if (keys.includes(String(val))) continue;
+
+    if (!isString && typeof val === 'number' && val === name) return val;
+
+    if (isString) {
+      if (key.toLocaleUpperCase() === clean) return enumerator[key];
+
+      if (
+        typeof enumerator[key] === 'string' &&
+        String(enumerator[key]).toLocaleUpperCase() === clean
+      )
+        return enumerator[key];
+    }
   }
   return typeof def === 'undefined' ? null : def;
 }

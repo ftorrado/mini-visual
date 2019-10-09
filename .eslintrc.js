@@ -12,6 +12,7 @@ module.exports = {
   rules: {
     'max-len': ["error", { "code": 80, "ignoreComments": true }],
     'semi': 2,
+    'no-extra-semi': 2,
     'no-plusplus': ["error", { "allowForLoopAfterthoughts": true }],
     'quote-props': 0,
     // allow paren-less arrow functions

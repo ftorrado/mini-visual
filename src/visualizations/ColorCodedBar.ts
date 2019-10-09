@@ -2,6 +2,7 @@ import * as d3 from 'd3';
 import Visualization, { Visualizable } from './Visualization';
 import findEnumNameOrValue from '../commons/findEnumNameOrValue';
 import PaletteEnum from '../commons/PaletteEnum';
+import ScaleEnum from '../commons/ScaleEnum';
 import VisualizationEnum from '../commons/VisualizationEnum';
 import VisualizationProps from '../commons/VisualizationProps';
 
@@ -9,7 +10,6 @@ export default class ColorCodedBar extends Visualization
   implements Visualizable {
   constructor(props: VisualizationProps) {
     super(props);
-    this.start();
   }
 
   start(props?: VisualizationProps): void {
@@ -28,8 +28,19 @@ export default class ColorCodedBar extends Visualization
 
   initAxisY(): d3.ScaleContinuousNumeric<string, number> {
     const dataProps = this.service.getDataProps();
+    const axisProps = this.props.yAxis;
 
-    let axis = d3.scaleLinear<string, number>();
+    let axis;
+    switch (axisProps.scale) {
+      case ScaleEnum.Sqrt:
+        axis = d3.scaleSqrt();
+        break;
+      case ScaleEnum.Linear:
+      default:
+        axis = d3.scaleLinear<string, number>();
+        break;
+    }
+    if (axisProps.interpolate) axis = axis.interpolate(axisProps.interpolate);
 
     // domain
     const hasDomain =
@@ -57,10 +68,10 @@ export default class ColorCodedBar extends Visualization
     } else {
       switch (findEnumNameOrValue(PaletteEnum, this.props.yAxis.palette)) {
         case PaletteEnum.heatmap:
-          axis = axis.range(['#138', '#ffd', '#a01']);
+          axis = axis.range(['#138', '#fff', '#b01']);
           break;
         case PaletteEnum.heatmap2:
-          axis = axis.range(['#22f', '#eee', '#d10']);
+          axis = axis.range(['#22f', '#fff', '#d10']);
           break;
         case PaletteEnum.grayscale:
         default:
